@@ -8,45 +8,23 @@ public class BallController {
 
     private Color ballColor = Color.RED; // Default ball color is red
 
-    public BallController(BallPanel ballPanel) {
-        this.ballPanel = ballPanel;
+    public BallController() {
         this.listOfBalls = new ArrayList<>(); // Initialize the list here
     }
 
-    public void setLinearMotion() {
-        ballPanel.performLinearMotion();
-    }
-
-    public void setParabolicMotion() {
-        ballPanel.performParabolicMotion();
-    }
-
-    public void setCircularMotion() {
-        ballPanel.performCircularMotion();
-    }
-
-    public void setSinusoidalMotion() {
-        ballPanel.performSinusoidalMotion();
-    }
-
-    public void setEllipticalMotion() {
-        ballPanel.performEllipticalMotion();
-    }
-
-    public void setInfinityMotion() {
-        ballPanel.performInfinityMotion();
-    }
-
     public void addBall() {
-        int randomX = ballPanel.generateX(); // Generate a random x-coordinate
-        CreateBall newBall = new CreateBall(randomX, 0, 15, generateRandomColor()); // Create a new ball
-        listOfBalls.add(newBall); // Add the new ball to the list of balls
+        int randomX = ballPanel.generateX(); 
+        int initialY = ballPanel.getHeight() - 30; // Adjust the initial y-coordinate
+        CreateBall newBall = new CreateBall(randomX, initialY, 15, generateRandomColor()); 
+        listOfBalls.add(newBall); 
+        
     }
 
     public void removeBall() {
         if (!listOfBalls.isEmpty()) {
             int lastIndex = listOfBalls.size() - 1;
             listOfBalls.remove(lastIndex);
+            
         }
     }
 
@@ -72,5 +50,7 @@ public class BallController {
     public ArrayList<CreateBall> getListOfBalls(){
         return listOfBalls;
     }
+
+    
     
 }

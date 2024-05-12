@@ -1,5 +1,6 @@
 import javax.swing.*;
-import java.awt.*;
+
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
@@ -13,6 +14,8 @@ public class BallPanel extends JPanel implements ActionListener {
     private int delay = 1000 / 60;
     protected Timer timer;
     private Random random = new Random();
+    private BallController ballController;
+
 
     private int x = 0;         // x position
     private int y = 0;         // y position
@@ -21,9 +24,11 @@ public class BallPanel extends JPanel implements ActionListener {
     private int dx = 1;        // increment amount (x coord)
     private int dy = 1;        // increment amount (y coord)
 
-    public BallPanel() {
-        timer = new Timer(delay, this);
+    public BallPanel(BallController ballController) {
+        this.ballController = ballController;
+        timer = new Timer(delay, this); 
     }
+
 
     // Method to start the timer
     public void startTimer() {
@@ -40,6 +45,13 @@ public class BallPanel extends JPanel implements ActionListener {
         move();
         repaint();
     }
+
+    protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    for (CreateBall ball : ballController.getListOfBalls()) {
+        ball.draw(g);
+    }
+}
 
     // Method to perform linear motion
     public void performLinearMotion() {
@@ -126,9 +138,5 @@ public class BallPanel extends JPanel implements ActionListener {
     public int generateY() {
         return random.nextInt(601);
     }
-
-    
-
-    // Paint component method
 
 }

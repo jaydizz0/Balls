@@ -51,6 +51,8 @@ public class CreateBall {
     public void setColor(Color color) {
         this.color = color;
     }
+
+    
 }
 
 

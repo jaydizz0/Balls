@@ -111,7 +111,7 @@ public class MenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (linearMotion.isSelected()) {
-                    ballController.setLinearMotion();
+                    ballPanel.performLinearMotion();
                     // Deselect other motion options if needed
                     parabolicMotion.setSelected(false);
                     circularMotion.setSelected(false);
@@ -126,7 +126,7 @@ public class MenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (parabolicMotion.isSelected()) {
-                    ballController.setParabolicMotion();
+                    ballPanel.performParabolicMotion();
                     // Deselect other motion options if needed
                     linearMotion.setSelected(false);
                     circularMotion.setSelected(false);
@@ -141,7 +141,7 @@ public class MenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (circularMotion.isSelected()) {
-                    ballController.setCircularMotion();
+                    ballPanel.performCircularMotion();
                     linearMotion.setSelected(false);
                     parabolicMotion.setSelected(false);
                     sinusoidalMotion.setSelected(false);
@@ -155,7 +155,7 @@ public class MenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (sinusoidalMotion.isSelected()) {
-                    ballController.setSinusoidalMotion();
+                    ballPanel.performSinusoidalMotion();
                     // Deselect other motion options if needed
                     linearMotion.setSelected(false);
                     circularMotion.setSelected(false);
@@ -169,7 +169,7 @@ public class MenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (ellipticalMotion.isSelected()) {
-                    ballController.setEllipticalMotion();
+                    ballPanel.performEllipticalMotion();
                     // Deselect other motion options if needed
                     linearMotion.setSelected(false);
                     circularMotion.setSelected(false);
@@ -183,7 +183,7 @@ public class MenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (infinityMotion.isSelected()) {
-                    ballController.setInfinityMotion();
+                    ballPanel.performInfinityMotion();
                     // Deselect other motion options if needed
                     linearMotion.setSelected(false);
                     circularMotion.setSelected(false);

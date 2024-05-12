@@ -76,8 +76,8 @@ public class BallUI {
                 addBall.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        ballController.addBall(); // Call the addBall method in BallController
-                        ballPanel.repaint(); // Repaint the panel to show the new ball
+                        ballController.addBall(); 
+                        ballPanel.repaint(); 
                     }
                 });
 
@@ -85,6 +85,7 @@ public class BallUI {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                     ballController.removeBall();
+                    ballPanel.repaint(); 
                     }
                 });
 
@@ -101,10 +102,10 @@ public class BallUI {
                 buttonPanel.add(addBall);
                 buttonPanel.add(removeBall);
 
-                buttonPanel.setPreferredSize(new Dimension(800, 40)); // Adjusted panel size
-                frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH); // Add button panel to SOUTH
+                buttonPanel.setPreferredSize(new Dimension(800, 40)); 
+                frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-                // Pack and display the frame
+               
                 frame.pack();
                 frame.setVisible(true);
             }
