@@ -5,12 +5,13 @@ public class CreateBall {
     private double y;
     private double radius;
     private Color color;
-    private double dx; // Velocity in x direction
-    private double dy; // Velocity in y direction
-    private Motion motion; // Motion type
+    private double dx; 
+    private double dy; 
+    private Motion motion; 
     private double initialX;
     private double initialY;
 
+    // Constructor
     public CreateBall(double x, double y, double radius, Color color, Motion motion, double dx, double dy) {
         this.x = x;
         this.y = y;

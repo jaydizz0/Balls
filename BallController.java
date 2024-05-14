@@ -19,10 +19,12 @@ public class BallController {
    
     private static final int RADIUS = 15;
 
+    // Constructor
     public BallController() {
         this.listOfBalls = new ArrayList<>(); // Initialize the list here
     }
 
+    // Adds Balls to array list 
     public CreateBall addBall() {
         int randomX = generateX();
         int randomY = generateY();
@@ -32,6 +34,7 @@ public class BallController {
         return newBall;
     }
 
+    // Removes Ball from array list 
     public CreateBall removeBall() {
         if (!listOfBalls.isEmpty()) {
             int lastIndex = listOfBalls.size() - 1;
@@ -41,6 +44,7 @@ public class BallController {
         return null;
     }
 
+    // Generates a random color
     public Color generateRandomColor() {
         // Generate random values for red, green, and blue components
         int red = random.nextInt(256); // Values range from 0 to 255
@@ -51,6 +55,7 @@ public class BallController {
         return new Color(red, green, blue);
     }
 
+    // Array list to store Balls
     public ArrayList<CreateBall> getListOfBalls() {
         return listOfBalls;
     }
@@ -91,6 +96,7 @@ public class BallController {
         }
     }
 
+    // Updates speed within the ball object
     private void updateSpeed(double speed) {
         for (CreateBall ball : listOfBalls) {
             ball.setDx(speed);
@@ -146,13 +152,14 @@ public class BallController {
         ball.setY(ball.getY() + speed);
     }
 
+    // Parabolic movment
     private void moveParabolic(CreateBall ball) {
         double x = ball.getX();
         double speed = ball.getSpeed();
         x += speed;
         int y;
         double dx = ball.getDx();
-        int amplitude = 100; // Adjust amplitude as needed
+        int amplitude = 50; // Adjust amplitude as needed
         y = (int)(300 - amplitude * Math.pow((x - 250) / 250.0, 2)); // Adjust the formula as needed
     
         // Update position
@@ -176,7 +183,7 @@ public class BallController {
     private void moveSinusoidal(CreateBall ball) {
         double speed = ball.getSpeed() - 0.5;
         ball.setX(ball.getX() + speed);
-        double amplitude = 400; // Adjust this value as needed
+        double amplitude = 80; // Adjust this value as needed
         ball.setY((int) (300 + amplitude * Math.sin(Math.toRadians(ball.getX()/2))));
     }
 
@@ -208,8 +215,7 @@ public class BallController {
 
         // Check if the ball hits the boundaries
         if (x - radius <= 0) {
-            ball.setDx(Math.abs(ball.getDx())); 
-            System.out.println("Bounce dx " + ball.getDx());
+            ball.setDx(Math.abs(ball.getDx()));  
         }
         else if(x + radius >= frameWidth && ball.getDx() >= 0){
             ball.setDx(-ball.getDx());
@@ -222,4 +228,7 @@ public class BallController {
             ball.setDy(-ball.getDy()); 
         }
     }
+
+    
+    
 }

@@ -8,15 +8,9 @@ public class BallPanel extends JPanel implements ActionListener {
 
     private int delay = 1000 / 60;
     protected Timer timer;
-    private final BallController ballController;
-
-    // private int x = 0;         
-    // private int y = 0;         
-    // private int radius = 15;   
-
-    // private int dx = 1;       
-    // private int dy = 1;        
-
+    private final BallController ballController;   
+    
+    // Constructor
     public BallPanel(BallController ballController) {
         timer = new Timer(delay, this); 
         this.ballController = ballController;
@@ -40,6 +34,7 @@ public class BallPanel extends JPanel implements ActionListener {
         repaint();
     }
     
+    // Itterates through Array list to paint all the balls to the screen
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

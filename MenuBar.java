@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 public class MenuBar {
     private JMenu speedMenu;
     private JMenu motionMenu;
+    private JMenu colorMenu;
     private BallController ballController;
     public MenuBar(BallController ballController) {
         this.ballController = ballController;
@@ -109,6 +110,94 @@ public class MenuBar {
         motionMenu.add(ellipticalMotion);
         motionMenu.add(infinityMotion);
 
+        // Initialize color menu
+        colorMenu = new JMenu("Change Color");
+        colorMenu.addSeparator();
+
+        // Create a ButtonGroup for color menu
+        ButtonGroup colorGroup = new ButtonGroup();
+
+        // Add radio buttons for each color option
+        JRadioButtonMenuItem rainbowColor = new JRadioButtonMenuItem("Rainbow");
+        JRadioButtonMenuItem redColor = new JRadioButtonMenuItem("Red");
+        JRadioButtonMenuItem blueColor = new JRadioButtonMenuItem("Blue");
+        JRadioButtonMenuItem greenColor = new JRadioButtonMenuItem("Green");
+
+        // Add radio buttons to the ButtonGroup
+        colorGroup.add(rainbowColor);
+        colorGroup.add(redColor);
+        colorGroup.add(blueColor);
+        colorGroup.add(greenColor);
+
+        // Add radio buttons to the color menu
+        colorMenu.add(rainbowColor);
+        colorMenu.add(redColor);
+        colorMenu.add(blueColor);
+        colorMenu.add(greenColor);
+
+        // Add action listeners to handle selection/deselection for color
+        rainbowColor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (rainbowColor.isSelected()) {
+                    for(CreateBall ball : ballController.getListOfBalls()){
+                        ball.setColor(ballController.generateRandomColor());
+                    }
+                    // Deselect other speed options if needed
+                    redColor.setSelected(false);
+                    blueColor.setSelected(false);
+                    greenColor.setSelected(false);
+
+                }
+            }
+        });
+
+        blueColor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (blueColor.isSelected()) {
+                    for(CreateBall ball : ballController.getListOfBalls()){
+                        ball.setColor(Color.BLUE);
+                    }
+                    // Deselect other speed options if needed
+                    redColor.setSelected(false);
+                    blueColor.setSelected(false);
+                    rainbowColor.setSelected(false);
+
+                }
+            }
+        });
+        greenColor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (greenColor.isSelected()) {
+                    for(CreateBall ball : ballController.getListOfBalls()){
+                        ball.setColor(Color.GREEN);
+                    }
+                    // Deselect other speed options if needed
+                    redColor.setSelected(false);
+                    blueColor.setSelected(false);
+                    rainbowColor.setSelected(false);
+
+                }
+            }
+        });
+        redColor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (redColor.isSelected()) {
+                    for(CreateBall ball : ballController.getListOfBalls()){
+                        ball.setColor(Color.RED);
+                    }
+                    // Deselect other speed options if needed
+                    rainbowColor.setSelected(false);
+                    blueColor.setSelected(false);
+                    greenColor.setSelected(false);
+
+                }
+            }
+        });
+    
         // Add action listeners to handle selection/deselection
         linearMotion.addActionListener(new ActionListener() {
             @Override
@@ -217,6 +306,10 @@ public class MenuBar {
 
     public JMenu getMotionMenu() {
         return motionMenu;
+    }
+
+    public JMenu getColorMenu(){
+        return colorMenu;
     }
 
 }

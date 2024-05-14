@@ -13,6 +13,7 @@ public class BallUI {
 
     }
 
+    // Creates GUI and diplays it 
     public void createAndShowUI() {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -26,11 +27,13 @@ public class BallUI {
                 MenuBar menuBar = new MenuBar(ballController);
                 JMenu speedMenu = menuBar.getSpeedMenu();
                 JMenu motionMenu = menuBar.getMotionMenu();
+                JMenu colorMenu = menuBar.getColorMenu();
 
                 // Add the menu bars to GUI
                 JMenuBar menuBarGUI = new JMenuBar();
                 menuBarGUI.add(speedMenu);
                 menuBarGUI.add(motionMenu);
+                menuBarGUI.add(colorMenu);
                 frame.setJMenuBar(menuBarGUI);
 
                 // Create buttons panel with background color

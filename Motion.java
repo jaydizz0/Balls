@@ -1,3 +1,4 @@
+// Enumeration for organization
 public  enum Motion {
     CIRCULAR_MOTION,
     ELLIPTICAL_MOTION,

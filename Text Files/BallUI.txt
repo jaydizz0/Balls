@@ -13,6 +13,7 @@ public class BallUI {
 
     }
 
+    // Creates GUI and diplays it 
     public void createAndShowUI() {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -26,11 +27,13 @@ public class BallUI {
                 MenuBar menuBar = new MenuBar(ballController);
                 JMenu speedMenu = menuBar.getSpeedMenu();
                 JMenu motionMenu = menuBar.getMotionMenu();
+                JMenu colorMenu = menuBar.getColorMenu();
 
                 // Add the menu bars to GUI
                 JMenuBar menuBarGUI = new JMenuBar();
                 menuBarGUI.add(speedMenu);
                 menuBarGUI.add(motionMenu);
+                menuBarGUI.add(colorMenu);
                 frame.setJMenuBar(menuBarGUI);
 
                 // Create buttons panel with background color
@@ -73,7 +76,7 @@ public class BallUI {
                 addBall.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {  
-                        addBall();
+                        addBall(ballController);
                         
                     }
                 });
@@ -83,6 +86,8 @@ public class BallUI {
                     public void actionPerformed(ActionEvent e) {
                         ballController.removeBall();
                         frame.getContentPane().revalidate();
+                        frame.repaint();
+                        
                     }
                 });
 
@@ -106,14 +111,16 @@ public class BallUI {
                 frame.setVisible(true);
             }
 
-            private CreateBall addBall() {
+            private CreateBall addBall(BallController ballController) {
                 CreateBall ball = ballController.addBall();
-                BallPanel ballPanel = new BallPanel(ball);
+                BallPanel ballPanel = new BallPanel(ballController); 
                 ballPanels.add(ballPanel);
                 frame.getContentPane().add(ballPanel, BorderLayout.CENTER);
                 frame.getContentPane().revalidate();
                 return ball;
             }
+
+            
         });
     }
 }

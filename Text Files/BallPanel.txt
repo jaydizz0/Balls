@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,18 +8,12 @@ public class BallPanel extends JPanel implements ActionListener {
 
     private int delay = 1000 / 60;
     protected Timer timer;
-    private final CreateBall ball;
-
-    private int x = 0;         // x position
-    private int y = 0;         // y position
-    private int radius = 15;   // ball radius
-
-    private int dx = 1;        // increment amount (x coord)
-    private int dy = 1;        // increment amount (y coord)
-
-    public BallPanel(CreateBall ball) {
+    private final BallController ballController;   
+    
+    // Constructor
+    public BallPanel(BallController ballController) {
         timer = new Timer(delay, this); 
-        this.ball = ball;
+        this.ballController = ballController;
     }
 
 
@@ -37,30 +30,23 @@ public class BallPanel extends JPanel implements ActionListener {
 
     // ActionListener implementation
     public void actionPerformed(ActionEvent e) {
-        move();
+        ballController.moveBalls();
         repaint();
     }
-
+    
+    // Itterates through Array list to paint all the balls to the screen
+    @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent( g ); 
-        g.setColor(ball.getColor());
-        g.fillOval(ball.getX() - ball.getRadius(), ball.getY() - ball.getRadius(), ball.getRadius()*2, ball.getRadius()*2);
-        g.dispose();
-    }
-
-    // Move the ball
-    private void move() {
-        if (x <= 600) {
-            x += dx;
-        } else {
-            x = -15;
-        }
-
-        if (y <= 600) {
-            y += dy;
-        } else {
-            y = -15;
+        super.paintComponent(g);
+        for (CreateBall ball : ballController.getListOfBalls()) {
+            g.setColor(ball.getColor());
+            double x = ball.getX() - ball.getRadius();
+            double y = ball.getY() - ball.getRadius();
+            double diameter = ball.getRadius() * 2;
+            g.fillOval((int)x, (int)y, (int)diameter, (int)diameter);
         }
     }
+
+    
 
 }
