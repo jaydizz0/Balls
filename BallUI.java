@@ -2,44 +2,35 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
+import java.util.ArrayList;
 public class BallUI {
-    private static JFrame frame;
+    private JFrame frame;
     private BallController ballController;
-    private BallPanel ballPanel;
-    private CreateBall createBall;
-    private Random random;
+    private ArrayList<BallPanel> ballPanels = new ArrayList<>();
 
-    public BallUI(BallController bc, BallPanel bp) {
+    public BallUI(BallController bc) {
         this.ballController = bc;
-        this.ballPanel = bp;
 
     }
 
     public void createAndShowUI() {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                random = new Random();
                 // Create the frame
                 frame = new JFrame("A World of Balls");
                 frame.setResizable(false);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setPreferredSize(new Dimension(800, 600)); // Adjusted frame size
-
-                // Add BallPanel to the frame's content pane
-                frame.getContentPane().add(ballPanel, BorderLayout.CENTER);
-
+            
                 // Menu Bars
-                MenuBar menuBar = new MenuBar(ballController, ballPanel);
+                MenuBar menuBar = new MenuBar(ballController);
                 JMenu speedMenu = menuBar.getSpeedMenu();
                 JMenu motionMenu = menuBar.getMotionMenu();
-                JMenu ballColorMenu = menuBar.getBallColorMenu();
 
                 // Add the menu bars to GUI
                 JMenuBar menuBarGUI = new JMenuBar();
                 menuBarGUI.add(speedMenu);
                 menuBarGUI.add(motionMenu);
-                menuBarGUI.add(ballColorMenu);
                 frame.setJMenuBar(menuBarGUI);
 
                 // Create buttons panel with background color
@@ -62,30 +53,38 @@ public class BallUI {
                 start.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        ballPanel.startTimer();
+                        for (BallPanel ballPanel : ballPanels) {
+                            ballPanel.startTimer();
+                        }
+                        
                     }
                 });
 
                 stop.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        ballPanel.stopTimer();
+                        for (BallPanel ballPanel : ballPanels) {
+                            ballPanel.stopTimer();
+                        }
+                        
                     }
                 });
 
                 addBall.addActionListener(new ActionListener() {
                     @Override
-                    public void actionPerformed(ActionEvent e) {
-                        ballController.addBall(); 
-                        ballPanel.repaint(); 
+                    public void actionPerformed(ActionEvent e) {  
+                        addBall(ballController);
+                        
                     }
                 });
 
                 removeBall.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                    ballController.removeBall();
-                    ballPanel.repaint(); 
+                        ballController.removeBall();
+                        frame.getContentPane().revalidate();
+                        frame.repaint();
+                        
                     }
                 });
 
@@ -105,10 +104,20 @@ public class BallUI {
                 buttonPanel.setPreferredSize(new Dimension(800, 40)); 
                 frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-               
                 frame.pack();
                 frame.setVisible(true);
             }
+
+            private CreateBall addBall(BallController ballController) {
+                CreateBall ball = ballController.addBall();
+                BallPanel ballPanel = new BallPanel(ballController); 
+                ballPanels.add(ballPanel);
+                frame.getContentPane().add(ballPanel, BorderLayout.CENTER);
+                frame.getContentPane().revalidate();
+                return ball;
+            }
+
+            
         });
     }
 }

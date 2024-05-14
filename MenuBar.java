@@ -6,11 +6,10 @@ import java.awt.event.ActionListener;
 public class MenuBar {
     private JMenu speedMenu;
     private JMenu motionMenu;
-    private JMenu ballColorMenu;
-   
+    private BallController ballController;
+    public MenuBar(BallController ballController) {
+        this.ballController = ballController;
 
-    public MenuBar(BallController ballController, BallPanel ballPanel) {
-   
 
         // Initialize speed menu
         speedMenu = new JMenu("Speed");
@@ -39,9 +38,10 @@ public class MenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (lowSpeed.isSelected()) {
-                    // Set low speed
-                    ballPanel.setVelocity(1);
-                    // Deselect other speed options if needed
+                    for(CreateBall ball : ballController.getListOfBalls()){
+                        ball.setDx(1);
+                        ball.setDy(1);
+                    }
                     mediumSpeed.setSelected(false);
                     highSpeed.setSelected(false);
                 }
@@ -52,9 +52,10 @@ public class MenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (mediumSpeed.isSelected()) {
-                    // Set medium speed
-                    ballPanel.setVelocity(2);
-                    // Deselect other speed options if needed
+                    for(CreateBall ball : ballController.getListOfBalls()){
+                        ball.setDx(2);
+                        ball.setDy(2);
+                    }
                     lowSpeed.setSelected(false);
                     highSpeed.setSelected(false);
                 }
@@ -66,14 +67,16 @@ public class MenuBar {
             public void actionPerformed(ActionEvent e) {
                 if (highSpeed.isSelected()) {
                     // Set high speed
-                    ballPanel.setVelocity(3);
+                    for(CreateBall ball : ballController.getListOfBalls()){
+                        ball.setDx(3);
+                        ball.setDy(3);
+                    }
                     // Deselect other speed options if needed
                     lowSpeed.setSelected(false);
                     mediumSpeed.setSelected(false);
                 }
             }
         });
-
 
         // Initialize motion menu
         motionMenu = new JMenu("Motion");
@@ -111,22 +114,27 @@ public class MenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (linearMotion.isSelected()) {
-                    ballPanel.performLinearMotion();
-                    // Deselect other motion options if needed
+                    for(CreateBall ball: ballController.getListOfBalls()){
+                        ball.setMotion(Motion.LINEAR_MOTION);
+                        ballController.moveBalls();
+                    }
                     parabolicMotion.setSelected(false);
                     circularMotion.setSelected(false);
                     sinusoidalMotion.setSelected(false);
                     ellipticalMotion.setSelected(false);
                     infinityMotion.setSelected(false);
                 }
-            }
+            }   
         });
 
         parabolicMotion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (parabolicMotion.isSelected()) {
-                    ballPanel.performParabolicMotion();
+                    for(CreateBall ball : ballController.getListOfBalls()){
+                        ball.setMotion(Motion.PARABOLIC_MOTION);
+                    }
+                    
                     // Deselect other motion options if needed
                     linearMotion.setSelected(false);
                     circularMotion.setSelected(false);
@@ -141,7 +149,10 @@ public class MenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (circularMotion.isSelected()) {
-                    ballPanel.performCircularMotion();
+                    for(CreateBall ball : ballController.getListOfBalls()){
+                        ball.setMotion(Motion.CIRCULAR_MOTION);
+                    }
+                   
                     linearMotion.setSelected(false);
                     parabolicMotion.setSelected(false);
                     sinusoidalMotion.setSelected(false);
@@ -155,8 +166,9 @@ public class MenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (sinusoidalMotion.isSelected()) {
-                    ballPanel.performSinusoidalMotion();
-                    // Deselect other motion options if needed
+                    for(CreateBall ball : ballController.getListOfBalls()){
+                        ball.setMotion(Motion.SINUSOIDAL_MOTION);
+                    }
                     linearMotion.setSelected(false);
                     circularMotion.setSelected(false);
                     parabolicMotion.setSelected(false);
@@ -169,7 +181,10 @@ public class MenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (ellipticalMotion.isSelected()) {
-                    ballPanel.performEllipticalMotion();
+                    for(CreateBall ball : ballController.getListOfBalls()){
+                        ball.setMotion(Motion.ELLIPTICAL_MOTION);
+                    }
+              
                     // Deselect other motion options if needed
                     linearMotion.setSelected(false);
                     circularMotion.setSelected(false);
@@ -183,82 +198,14 @@ public class MenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (infinityMotion.isSelected()) {
-                    ballPanel.performInfinityMotion();
-                    // Deselect other motion options if needed
+                    for(CreateBall ball : ballController.getListOfBalls()){
+                        ball.setMotion(Motion.INFINITY_MOTION);
+                    }
                     linearMotion.setSelected(false);
                     circularMotion.setSelected(false);
                     sinusoidalMotion.setSelected(false);
                     ellipticalMotion.setSelected(false);
                     parabolicMotion.setSelected(false);
-                }
-            }
-        });
-
-
-            // Initialize ball color menu
-        ballColorMenu = new JMenu("Ball Color");
-        ballColorMenu.addSeparator();
-
-        // Create a ButtonGroup for ball color menu
-        ButtonGroup colorGroup = new ButtonGroup();
-
-        // Add radio buttons for each color option
-        JRadioButtonMenuItem redColor = new JRadioButtonMenuItem("Red");
-        JRadioButtonMenuItem greenColor = new JRadioButtonMenuItem("Green");
-        JRadioButtonMenuItem blueColor = new JRadioButtonMenuItem("Blue");
-
-        // Add radio buttons to the ButtonGroup
-        colorGroup.add(redColor);
-        colorGroup.add(greenColor);
-        colorGroup.add(blueColor);
-
-        // Add radio buttons to the color menu
-        ballColorMenu.add(redColor);
-        ballColorMenu.add(greenColor);
-        ballColorMenu.add(blueColor);
-
-        // Add action listeners to handle selection/deselection
-
-        redColor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (redColor.isSelected()) {
-                    // Set red color
-                    ballController.setBallColor(Color.RED);
-                    for (CreateBall ball : ballController.getListOfBalls()) {
-                        ball.setColor(Color.RED);
-                    }
-                    greenColor.setSelected(false);
-                    blueColor.setSelected(false);
-                }
-            }
-        });
-
-        greenColor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (greenColor.isSelected()) {
-                    // Set green color
-                    for (CreateBall ball : ballController.getListOfBalls()) {
-                        ball.setColor(Color.GREEN);
-                    }
-                    // Deselect other color options if needed
-                    redColor.setSelected(false);
-                    blueColor.setSelected(false);
-                }
-            }
-        });
-
-        blueColor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (blueColor.isSelected()) {
-                    // Set blue color
-                    for (CreateBall ball : ballController.getListOfBalls()) {
-                        ball.setColor(Color.BLUE);
-                    }
-                    redColor.setSelected(false);
-                    greenColor.setSelected(false);
                 }
             }
         });
@@ -272,11 +219,4 @@ public class MenuBar {
         return motionMenu;
     }
 
-    public JMenu getBallColorMenu() {
-        return ballColorMenu;
-    }
-
 }
-
-
-
