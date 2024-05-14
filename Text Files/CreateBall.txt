@@ -1,0 +1,71 @@
+import java.awt.*;
+import java.security.cert.PKIXReason;
+
+
+
+public class CreateBall {
+    private int x; 
+    private int y; 
+    private int radius; 
+    private Color color; 
+    private Motion motion;
+    private BallController ballController;
+    
+    public CreateBall(int x, int y, int radius, Color color, Motion motion) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.motion = motion;
+    }
+    
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void setMotion(Motion motion) {
+        this.motion = motion;
+    }
+
+    
+    public Motion getMotion() {
+        return motion;
+    }
+
+    public void setMotions(Motion motions){
+        for(CreateBall b : ballController.getListOfBalls()){
+            b.setMotion(motions);
+        }
+    } 
+    
+}
+
+

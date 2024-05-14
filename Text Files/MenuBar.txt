@@ -1,84 +1,197 @@
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MenuBar {
     private JMenu speedMenu;
     private JMenu motionMenu;
-    private JMenu ballColorMenu;
+    private BallController ballController;
+    public MenuBar(BallController ballController) {
+        this.ballController = ballController;
 
-    public MenuBar() {
-        // Speed Menu
+
+        // Initialize speed menu
         speedMenu = new JMenu("Speed");
         speedMenu.addSeparator();
-        ImageIcon lowIcon = new ImageIcon(resizeImage("images/turtle.png", 10, 10));
-        ImageIcon mediumIcon = new ImageIcon(resizeImage("images/hare.png", 10, 10));
-        ImageIcon highIcon = new ImageIcon(resizeImage("images/cheetah.png", 10, 10));
 
-        JRadioButtonMenuItem low = new JRadioButtonMenuItem("Low Speed");
-        low.setIcon(lowIcon);
-        JRadioButtonMenuItem medium = new JRadioButtonMenuItem("Medium Speed");
-        medium.setIcon(mediumIcon);
-        JRadioButtonMenuItem high = new JRadioButtonMenuItem("High Speed");
-        high.setIcon(highIcon);
+        // Create a ButtonGroup for speed menu
+        ButtonGroup speedGroup = new ButtonGroup();
 
-        speedMenu.add(low);
-        speedMenu.add(medium);
-        speedMenu.add(high);
+        // Add radio buttons for each speed level
+        JRadioButtonMenuItem lowSpeed = new JRadioButtonMenuItem("Low Speed");
+        JRadioButtonMenuItem mediumSpeed = new JRadioButtonMenuItem("Medium Speed");
+        JRadioButtonMenuItem highSpeed = new JRadioButtonMenuItem("High Speed");
 
-        // Motion Menu
+        // Add radio buttons to the ButtonGroup
+        speedGroup.add(lowSpeed);
+        speedGroup.add(mediumSpeed);
+        speedGroup.add(highSpeed);
+
+        // Add radio buttons to the speed menu
+        speedMenu.add(lowSpeed);
+        speedMenu.add(mediumSpeed);
+        speedMenu.add(highSpeed);
+
+        // Add action listeners to handle selection/deselection
+        lowSpeed.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (lowSpeed.isSelected()) {
+                   
+                    mediumSpeed.setSelected(false);
+                    highSpeed.setSelected(false);
+                }
+            }
+        });
+
+        mediumSpeed.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (mediumSpeed.isSelected()) {
+                    
+                    lowSpeed.setSelected(false);
+                    highSpeed.setSelected(false);
+                }
+            }
+        });
+
+        highSpeed.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (highSpeed.isSelected()) {
+                    // Set high speed
+                    
+                    // Deselect other speed options if needed
+                    lowSpeed.setSelected(false);
+                    mediumSpeed.setSelected(false);
+                }
+            }
+        });
+
+        // Initialize motion menu
         motionMenu = new JMenu("Motion");
         motionMenu.addSeparator();
 
-        ImageIcon linearIcon = new ImageIcon(resizeImage("images/linear.jpeg", 10, 10));
-        ImageIcon parabolicIcon = new ImageIcon(resizeImage("images/parabola.png", 10, 10));
-        ImageIcon circularIcon = new ImageIcon(resizeImage("images/circular.jpeg", 10, 10));
-        ImageIcon sinusodialIcon = new ImageIcon(resizeImage("images/sinusodial.png", 10, 10));
-        ImageIcon infinityIcon = new ImageIcon(resizeImage("images/infinity.jpg", 10, 10));
-        ImageIcon eclipseIcon = new ImageIcon(resizeImage("images/eclispe.png", 10, 10));
+        // Create a ButtonGroup for motion menu
+        ButtonGroup motionGroup = new ButtonGroup();
 
-        JRadioButtonMenuItem linear = new JRadioButtonMenuItem("Linear");
-        linear.setIcon(linearIcon);
-        JRadioButtonMenuItem parabolic = new JRadioButtonMenuItem("Parabolic");
-        parabolic.setIcon(parabolicIcon);
-        JRadioButtonMenuItem circular = new JRadioButtonMenuItem("Circular");
-        circular.setIcon(circularIcon);
-        JRadioButtonMenuItem sinusodial = new JRadioButtonMenuItem("Sinusoidal");
-        sinusodial.setIcon(sinusodialIcon);
-        JRadioButtonMenuItem infinity = new JRadioButtonMenuItem("Infinity");
-        infinity.setIcon(infinityIcon);
-        JRadioButtonMenuItem eclipse = new JRadioButtonMenuItem("Eclipse");
-        eclipse.setIcon(eclipseIcon);
+        // Add radio buttons for each motion type
+        JRadioButtonMenuItem linearMotion = new JRadioButtonMenuItem("Linear");
+        JRadioButtonMenuItem parabolicMotion = new JRadioButtonMenuItem("Parabolic");
+        JRadioButtonMenuItem circularMotion = new JRadioButtonMenuItem("Circular");
+        JRadioButtonMenuItem sinusoidalMotion = new JRadioButtonMenuItem("Sinusoidal");
+        JRadioButtonMenuItem ellipticalMotion = new JRadioButtonMenuItem("Ellipse");
+        JRadioButtonMenuItem infinityMotion = new JRadioButtonMenuItem("Infinity");
 
-        motionMenu.add(linear);
-        motionMenu.add(parabolic);
-        motionMenu.add(circular);
-        motionMenu.add(sinusodial);
-        motionMenu.add(infinity);
-        motionMenu.add(eclipse);
+        // Add radio buttons to the ButtonGroup
+        motionGroup.add(linearMotion);
+        motionGroup.add(parabolicMotion);
+        motionGroup.add(circularMotion);
+        motionGroup.add(sinusoidalMotion);
+        motionGroup.add(ellipticalMotion);
+        motionGroup.add(infinityMotion);
 
-        // Ball Color Menu
-        ballColorMenu = new JMenu("Ball Color");
-        ballColorMenu.addSeparator();
+        // Add radio buttons to the motion menu
+        motionMenu.add(linearMotion);
+        motionMenu.add(parabolicMotion);
+        motionMenu.add(circularMotion);
+        motionMenu.add(sinusoidalMotion);
+        motionMenu.add(ellipticalMotion);
+        motionMenu.add(infinityMotion);
 
-        ImageIcon rainbowIcon = new ImageIcon(resizeImage("images/rainbow.jpeg", 10, 10));
-        ImageIcon redIcon = new ImageIcon(resizeImage("images/red.png", 10, 10));
-        ImageIcon greenIcon = new ImageIcon(resizeImage("images/greeen.png", 10, 10));
-        ImageIcon blueIcon = new ImageIcon(resizeImage("images/blue.png", 10, 10));
+        // Add action listeners to handle selection/deselection
+        linearMotion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (linearMotion.isSelected()) {
+                    for(CreateBall ball: ballController.getListOfBalls()){
+                        ball.setMotion(Motion.LINEAR_MOTION);
+                        ballController.moveBalls();
+                    }
+                    parabolicMotion.setSelected(false);
+                    circularMotion.setSelected(false);
+                    sinusoidalMotion.setSelected(false);
+                    ellipticalMotion.setSelected(false);
+                    infinityMotion.setSelected(false);
+                }
+            }   
+        });
 
-        JRadioButtonMenuItem rainbowBalls = new JRadioButtonMenuItem("Rainbow");
-        rainbowBalls.setIcon(rainbowIcon);
-        JRadioButtonMenuItem redBalls = new JRadioButtonMenuItem("Red");
-        redBalls.setIcon(redIcon);
-        JRadioButtonMenuItem greenBalls = new JRadioButtonMenuItem("Green");
-        greenBalls.setIcon(greenIcon);
-        JRadioButtonMenuItem blueBalls = new JRadioButtonMenuItem("Blue");
-        blueBalls.setIcon(blueIcon);
+        parabolicMotion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (parabolicMotion.isSelected()) {
+                    
+                    
+                    // Deselect other motion options if needed
+                    linearMotion.setSelected(false);
+                    circularMotion.setSelected(false);
+                    sinusoidalMotion.setSelected(false);
+                    ellipticalMotion.setSelected(false);
+                    infinityMotion.setSelected(false);
+                }
+            }
+        });
 
-        ballColorMenu.add(rainbowBalls);
-        ballColorMenu.add(redBalls);
-        ballColorMenu.add(greenBalls);
-        ballColorMenu.add(blueBalls);
+        circularMotion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (circularMotion.isSelected()) {
+                    
+                   
+                    linearMotion.setSelected(false);
+                    parabolicMotion.setSelected(false);
+                    sinusoidalMotion.setSelected(false);
+                    ellipticalMotion.setSelected(false);
+                    infinityMotion.setSelected(false);
+                }
+            }
+        });
+
+        sinusoidalMotion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (sinusoidalMotion.isSelected()) {
+                    
+                    
+                    // Deselect other motion options if needed
+                    linearMotion.setSelected(false);
+                    circularMotion.setSelected(false);
+                    parabolicMotion.setSelected(false);
+                    ellipticalMotion.setSelected(false);
+                    infinityMotion.setSelected(false);
+                }
+            }
+        });
+        ellipticalMotion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (ellipticalMotion.isSelected()) {
+                    
+              
+                    // Deselect other motion options if needed
+                    linearMotion.setSelected(false);
+                    circularMotion.setSelected(false);
+                    sinusoidalMotion.setSelected(false);
+                    parabolicMotion.setSelected(false);
+                    infinityMotion.setSelected(false);
+                }
+            }
+        });
+        infinityMotion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (infinityMotion.isSelected()) {
+                    
+                    linearMotion.setSelected(false);
+                    circularMotion.setSelected(false);
+                    sinusoidalMotion.setSelected(false);
+                    ellipticalMotion.setSelected(false);
+                    parabolicMotion.setSelected(false);
+                }
+            }
+        });
     }
 
     public JMenu getSpeedMenu() {
@@ -89,12 +202,4 @@ public class MenuBar {
         return motionMenu;
     }
 
-    public JMenu getBallColorMenu() {
-        return ballColorMenu;
-    }
-
-    private Image resizeImage(String path, int width, int height) {
-        ImageIcon icon = new ImageIcon(path);
-        return icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-    }
 }

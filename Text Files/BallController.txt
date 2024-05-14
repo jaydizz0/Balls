@@ -1,0 +1,147 @@
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Random;
+
+public class BallController {
+    private ArrayList<CreateBall> listOfBalls;
+    private Random random = new Random();
+    private Color ballColor = Color.RED; // Default ball color is red
+    private Motion motion = Motion.DEFAULT_MOTION; // Default motion is linear
+
+    // Constants for velocity components
+    private static final int DEFAULT_SPEED = 2;
+    private static final int RADIUS = 15;
+
+    public BallController() {
+        this.listOfBalls = new ArrayList<>(); // Initialize the list here
+    }
+
+    public CreateBall addBall() {
+        int randomX = generateX();
+        int initialY = generateY();
+        CreateBall newBall = new CreateBall(randomX, initialY, RADIUS, generateRandomColor(), motion);
+        listOfBalls.add(newBall);
+        return newBall;
+    }
+
+    public void removeBall() {
+        if (!listOfBalls.isEmpty()) {
+            int lastIndex = listOfBalls.size() - 1;
+            listOfBalls.remove(lastIndex);
+        }
+    }
+
+    public Color generateRandomColor() {
+        // Generate random values for red, green, and blue components
+        int red = random.nextInt(256); // Values range from 0 to 255
+        int green = random.nextInt(256);
+        int blue = random.nextInt(256);
+
+        // Create and return the Color object
+        return new Color(red, green, blue);
+    }
+
+    public ArrayList<CreateBall> getListOfBalls() {
+        return listOfBalls;
+    }
+
+    // Method to generate a random x-coordinate
+    public int generateX() {
+        return random.nextInt(601);
+    }
+
+    // Method to generate a random y-coordinate
+    public int generateY() {
+        return random.nextInt(601);
+    }
+
+    // Method to set motion for all balls
+    public void setMotion(Motion motion) {
+        this.motion = motion;
+        for (CreateBall ball : listOfBalls) {
+            ball.setMotion(motion);
+        }
+    }
+
+    // Method to move all balls
+    public void moveBalls() {
+        for (CreateBall ball : listOfBalls) {
+            moveBall(ball);
+        }
+    }
+
+    // Method to move a single ball
+    private void moveBall(CreateBall ball) {
+        switch (ball.getMotion()) {
+            case LINEAR_MOTION:
+                moveLinear(ball);
+                break;
+            case PARABOLIC_MOTION:
+                moveParabolic(ball);
+                break;
+            case CIRCULAR_MOTION:
+                moveCircular(ball);
+                break;
+            case SINUSOIDAL_MOTION:
+                moveSinusoidal(ball);
+                break;
+            case ELLIPTICAL_MOTION:
+                moveElliptical(ball);
+                break;
+            case INFINITY_MOTION:
+                moveInfinity(ball);
+                break;
+            default:
+                moveLinear(ball);
+        }
+    }
+
+    // Method to move a ball with linear motion
+    private void moveLinear(CreateBall ball) {
+        int dx = DEFAULT_SPEED;
+        int dy = DEFAULT_SPEED;
+        ball.setX(ball.getX() + dx);
+        ball.setY(ball.getY() + dy);
+    }
+
+    // Method to move a ball with parabolic motion
+    private void moveParabolic(CreateBall ball) {
+        int dx = DEFAULT_SPEED;
+        int dy = DEFAULT_SPEED / 2;
+        ball.setX(ball.getX() + dx);
+        ball.setY(ball.getY() + dy);
+    }
+
+    // Method to move a ball with circular motion
+    private void moveCircular(CreateBall ball) {
+        double angle = Math.toRadians(DEFAULT_SPEED);
+        int dx = (int) (RADIUS * Math.cos(angle));
+        int dy = (int) (RADIUS * Math.sin(angle));
+        ball.setX(ball.getX() + dx);
+        ball.setY(ball.getY() + dy);
+    }
+
+    // Method to move a ball with sinusoidal motion
+    private void moveSinusoidal(CreateBall ball) {
+        int dx = DEFAULT_SPEED;
+        int dy = (int) (10 * Math.sin(ball.getX() * Math.PI / 180));
+        ball.setX(ball.getX() + dx);
+        ball.setY(ball.getY() + dy);
+    }
+
+    // Method to move a ball with elliptical motion
+    private void moveElliptical(CreateBall ball) {
+        int dx = DEFAULT_SPEED;
+        int dy = (int) (2 * Math.sqrt(1 - (ball.getX() * ball.getX()) / (RADIUS * RADIUS)));
+        ball.setX(ball.getX() + dx);
+        ball.setY(ball.getY() + dy);
+    }
+
+    // Method to move a ball with infinity motion
+    private void moveInfinity(CreateBall ball) {
+        int dx = (int) (2 * (RADIUS * Math.cos(ball.getX())));
+        int dy = (int) (2 * (RADIUS * Math.sin(ball.getX()) * Math.cos(ball.getX())));
+        ball.setX(ball.getX() + dx);
+        ball.setY(ball.getY() + dy);
+    }
+}

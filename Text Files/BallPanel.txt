@@ -1,0 +1,66 @@
+import javax.swing.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class BallPanel extends JPanel implements ActionListener {
+    
+
+    private int delay = 1000 / 60;
+    protected Timer timer;
+    private final CreateBall ball;
+
+    private int x = 0;         // x position
+    private int y = 0;         // y position
+    private int radius = 15;   // ball radius
+
+    private int dx = 1;        // increment amount (x coord)
+    private int dy = 1;        // increment amount (y coord)
+
+    public BallPanel(CreateBall ball) {
+        timer = new Timer(delay, this); 
+        this.ball = ball;
+    }
+
+
+    // Method to start the timer
+    public void startTimer() {
+        timer.start();
+    }
+
+    // Method to stop the timer
+    public void stopTimer() {
+        timer.stop();
+    }
+
+
+    // ActionListener implementation
+    public void actionPerformed(ActionEvent e) {
+        move();
+        repaint();
+    }
+
+    protected void paintComponent(Graphics g) {
+        super.paintComponent( g ); 
+        g.setColor(ball.getColor());
+        g.fillOval(ball.getX() - ball.getRadius(), ball.getY() - ball.getRadius(), ball.getRadius()*2, ball.getRadius()*2);
+        g.dispose();
+    }
+
+    // Move the ball
+    private void move() {
+        if (x <= 600) {
+            x += dx;
+        } else {
+            x = -15;
+        }
+
+        if (y <= 600) {
+            y += dy;
+        } else {
+            y = -15;
+        }
+    }
+
+}

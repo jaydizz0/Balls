@@ -45,10 +45,10 @@ public class BallPanel extends JPanel implements ActionListener {
         super.paintComponent(g);
         for (CreateBall ball : ballController.getListOfBalls()) {
             g.setColor(ball.getColor());
-            int x = ball.getX() - ball.getRadius();
-            int y = ball.getY() - ball.getRadius();
-            int diameter = ball.getRadius() * 2;
-            g.fillOval(x, y, diameter, diameter);
+            double x = ball.getX() - ball.getRadius();
+            double y = ball.getY() - ball.getRadius();
+            double diameter = ball.getRadius() * 2;
+            g.fillOval((int)x, (int)y, (int)diameter, (int)diameter);
         }
     }
 

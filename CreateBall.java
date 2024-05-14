@@ -1,16 +1,17 @@
 import java.awt.Color;
 
 public class CreateBall {
-    private int x;
-    private int y;
-    private int radius;
+    private double x;
+    private double y;
+    private double radius;
     private Color color;
-    private int dx; // Velocity in x direction
-    private int dy; // Velocity in y direction
+    private double dx; // Velocity in x direction
+    private double dy; // Velocity in y direction
     private Motion motion; // Motion type
-    private int initialX;
+    private double initialX;
+    private double initialY;
 
-    public CreateBall(int x, int y, int radius, Color color, Motion motion, int dx, int dy) {
+    public CreateBall(double x, double y, double radius, Color color, Motion motion, double dx, double dy) {
         this.x = x;
         this.y = y;
         this.radius = radius;
@@ -21,27 +22,27 @@ public class CreateBall {
     }
 
     // Getters and setters for the properties
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 
-    public int getRadius() {
+    public double getRadius() {
         return radius;
     }
 
-    public void setRadius(int radius) {
+    public void setRadius(double radius) {
         this.radius = radius;
     }
 
@@ -53,19 +54,19 @@ public class CreateBall {
         this.color = color;
     }
 
-    public int getDx() {
+    public double getDx() {
         return dx;
     }
 
-    public void setDx(int dx) {
+    public void setDx(double dx) {
         this.dx = dx;
     }
 
-    public int getDy() {
+    public double getDy() {
         return dy;
     }
 
-    public void setDy(int dy) {
+    public void setDy(double dy) {
         this.dy = dy;
     }
 
@@ -77,7 +78,7 @@ public class CreateBall {
         this.motion = motion;
     }
 
-    public int getSpeed(){
+    public double getSpeed(){
         return dx;
     }
 
@@ -85,7 +86,15 @@ public class CreateBall {
         this.initialX = initialX; 
     }
 
-    public int getInitialX(){
+    public double getInitialX(){
         return initialX;
+    }
+
+    public void setInitialY(int initialY){
+        this.initialY = initialY; 
+    }
+
+    public double getInitialY(){
+        return initialY;
     }
 }
