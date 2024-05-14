@@ -9,10 +9,10 @@ public class BallController {
     private Motion motion = Motion.LINEAR_MOTION; // Default motion is linear
 
     // Constants for velocity components
-    private static final double DEFAULT_SPEED = 1;
+    private static final double DEFAULT_SPEED = 1.0;
     private static final double SLOW_SPEED = 0.5;
     private static final double MEDIUM_SPEED = 1.5;
-    private static final double FAST_SPEED = 2;
+    private static final double FAST_SPEED = 2.0;
     private double angle = 0.0;
     private int frameWidth = 780; // Adjust as needed
     private int frameHeight = 300; // Adjust as needed
@@ -158,14 +158,14 @@ public class BallController {
         double speed = ball.getSpeed();
         x += speed;
         int y;
-        double dx = ball.getDx();
+        
         int amplitude = 50; // Adjust amplitude as needed
-        y = (int)(300 - amplitude * Math.pow((x - 250) / 250.0, 2)); // Adjust the formula as needed
+        y = (int)(300 - amplitude * Math.pow((x - 250.0) / 250.0,2)); // Adjust the formula as needed
     
         // Update position
         ball.setX(x);
         ball.setY(y);
-        ball.setDx(dx);
+        
     }
 
     // Method to move a ball with circular motion
@@ -174,35 +174,35 @@ public class BallController {
         int centerX = 400;
         int centerY = 300;
         int radius = 200;
-        ball.setX((int) (centerX + radius * Math.cos(Math.toRadians(angle))));
-        ball.setY((int) (centerY + radius * Math.sin(Math.toRadians(angle))));
+        ball.setX((centerX + radius * Math.cos(Math.toRadians(angle))));
+        ball.setY((centerY + radius * Math.sin(Math.toRadians(angle))));
         angle += speed;
     }
 
     // Method to move a ball with sinusoidal motion
     private void moveSinusoidal(CreateBall ball) {
-        double speed = ball.getSpeed() - 0.5;
+        double speed = ball.getSpeed();
         ball.setX(ball.getX() + speed);
         double amplitude = 80; // Adjust this value as needed
-        ball.setY((int) (300 + amplitude * Math.sin(Math.toRadians(ball.getX()/2))));
+        ball.setY((300 + amplitude * Math.sin(Math.toRadians(ball.getX()/2))));
     }
 
     // Method to move a ball with elliptical motion
     private void moveElliptical(CreateBall ball) {
-        double speed = ball.getSpeed() - 0.5;
+        double speed = ball.getSpeed();
         int semiMajorAxis = 250; // adjust as needed
         int semiMinorAxis = 75; // adjust as needed
-        ball.setX((int) (400 + semiMajorAxis * Math.cos(Math.toRadians(angle))));
-        ball.setY((int) (300 + semiMinorAxis * Math.sin(Math.toRadians(angle))));
+        ball.setX((400 + semiMajorAxis * Math.cos(Math.toRadians(angle))));
+        ball.setY((300 + semiMinorAxis * Math.sin(Math.toRadians(angle))));
         angle += speed;
     }
 
     // Method to move a ball with infinity motion
     private void moveInfinity(CreateBall ball) {
-        double speed = ball.getSpeed() - 0.5;
+        double speed = ball.getSpeed();
         double scaleFactor = 250; // adjust as needed
-        ball.setX((int) (400 + scaleFactor * Math.cos(Math.toRadians(angle)) / (1 + Math.pow(Math.sin(Math.toRadians(angle)), 2))));
-        ball.setY((int) (300 + scaleFactor * Math.sin(Math.toRadians(angle)) * Math.cos(Math.toRadians(angle)) / (1 + Math.pow(Math.sin(Math.toRadians(angle)), 2))));
+        ball.setX((400 + scaleFactor * Math.cos(Math.toRadians(angle)) / (1 + Math.pow(Math.sin(Math.toRadians(angle)), 2))));
+        ball.setY((300 + scaleFactor * Math.sin(Math.toRadians(angle)) * Math.cos(Math.toRadians(angle)) / (1 + Math.pow(Math.sin(Math.toRadians(angle)), 2))));
         angle += speed;
     }
 

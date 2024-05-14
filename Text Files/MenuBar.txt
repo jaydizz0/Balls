@@ -7,9 +7,7 @@ public class MenuBar {
     private JMenu speedMenu;
     private JMenu motionMenu;
     private JMenu colorMenu;
-    private BallController ballController;
     public MenuBar(BallController ballController) {
-        this.ballController = ballController;
 
 
         // Initialize speed menu
@@ -40,8 +38,8 @@ public class MenuBar {
             public void actionPerformed(ActionEvent e) {
                 if (lowSpeed.isSelected()) {
                     for(CreateBall ball : ballController.getListOfBalls()){
-                        ball.setDx(1);
-                        ball.setDy(1);
+                        ball.setDx(1.0);
+                        ball.setDy(1.0);
                     }
                     mediumSpeed.setSelected(false);
                     highSpeed.setSelected(false);
@@ -54,8 +52,9 @@ public class MenuBar {
             public void actionPerformed(ActionEvent e) {
                 if (mediumSpeed.isSelected()) {
                     for(CreateBall ball : ballController.getListOfBalls()){
-                        ball.setDx(2);
-                        ball.setDy(2);
+                        ball.setDx(2.0);
+                        ball.setDy(2.0);
+                        
                     }
                     lowSpeed.setSelected(false);
                     highSpeed.setSelected(false);
@@ -69,8 +68,8 @@ public class MenuBar {
                 if (highSpeed.isSelected()) {
                     // Set high speed
                     for(CreateBall ball : ballController.getListOfBalls()){
-                        ball.setDx(3);
-                        ball.setDy(3);
+                        ball.setDx(3.0);
+                        ball.setDy(3.0);
                     }
                     // Deselect other speed options if needed
                     lowSpeed.setSelected(false);

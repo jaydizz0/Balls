@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class BallPanel extends JPanel implements ActionListener {
     
 
-    private int delay = 1000 / 60;
+    private int delay = 1000 / 30;
     protected Timer timer;
     private final BallController ballController;   
     
@@ -19,6 +19,7 @@ public class BallPanel extends JPanel implements ActionListener {
 
     // Method to start the timer
     public void startTimer() {
+        timer.stop();
         timer.start();
     }
 

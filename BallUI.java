@@ -50,7 +50,6 @@ public class BallUI {
                 JButton stop = new JButton("STOP");
                 JButton addBall = new JButton("Add Ball");
                 JButton removeBall = new JButton("Remove Ball");
-                JButton backgroundColor = new JButton("Background Color");
 
                 // Add action listeners to buttons
                 start.addActionListener(new ActionListener() {
@@ -91,16 +90,8 @@ public class BallUI {
                     }
                 });
 
-                backgroundColor.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        
-                    }
-                });
-
                 buttonPanel.add(start);
                 buttonPanel.add(stop);
-                buttonPanel.add(backgroundColor);
                 buttonPanel.add(addBall);
                 buttonPanel.add(removeBall);
 
